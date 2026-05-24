@@ -1,0 +1,122 @@
+﻿<Window x:Class="RPM_14.Task1Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Задание 1: Калькулятор" Height="600" Width="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style x:Key="SelectCombo" TargetType="ComboBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="SelectList" TargetType="ListBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="SelectRadio" TargetType="RadioButton">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+        <Style x:Key="ResultBox" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style x:Key="ActionBtn" TargetType="Button">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="OpBtn" TargetType="Button">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer>
+        <StackPanel Margin="10">
+            <TextBlock Text="Калькулятор со стилями" FontSize="16" FontWeight="Bold" 
+                       HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Первое число:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="txtNum1" Style="{StaticResource InputBox}" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="Второе число:" Style="{StaticResource Label}"/>
+            <TextBox x:Name="txtNum2" Style="{StaticResource InputBox}" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="Способ выбора операции:" Style="{StaticResource Label}" Margin="0,10,0,0"/>
+            <ComboBox x:Name="cboMode" Style="{StaticResource SelectCombo}" 
+                      SelectionChanged="cboMode_SelectionChanged" HorizontalAlignment="Left">
+                <ComboBoxItem Content="ComboBox" IsSelected="True"/>
+                <ComboBoxItem Content="RadioButton"/>
+                <ComboBoxItem Content="ListBox"/>
+                <ComboBoxItem Content="Кнопки"/>
+            </ComboBox>
+
+            <StackPanel x:Name="pnlCombo">
+                <TextBlock Text="Операция:" Style="{StaticResource Label}"/>
+                <ComboBox x:Name="cboOp" Style="{StaticResource SelectCombo}" HorizontalAlignment="Left">
+                    <ComboBoxItem Content="Сложение (+)" IsSelected="True"/>
+                    <ComboBoxItem Content="Вычитание (-)"/>
+                    <ComboBoxItem Content="Умножение (*)"/>
+                    <ComboBoxItem Content="Деление (/)"/>
+                    <ComboBoxItem Content="Степень (^)"/>
+                    <ComboBoxItem Content="Остаток (%)"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel x:Name="pnlRadio" Visibility="Collapsed">
+                <TextBlock Text="Операция:" Style="{StaticResource Label}"/>
+                <RadioButton x:Name="rbAdd" Content="Сложение (+)" GroupName="Op" Style="{StaticResource SelectRadio}" IsChecked="True"/>
+                <RadioButton x:Name="rbSub" Content="Вычитание (-)" GroupName="Op" Style="{StaticResource SelectRadio}"/>
+                <RadioButton x:Name="rbMul" Content="Умножение (*)" GroupName="Op" Style="{StaticResource SelectRadio}"/>
+                <RadioButton x:Name="rbDiv" Content="Деление (/)" GroupName="Op" Style="{StaticResource SelectRadio}"/>
+                <RadioButton x:Name="rbPow" Content="Степень (^)" GroupName="Op" Style="{StaticResource SelectRadio}"/>
+                <RadioButton x:Name="rbMod" Content="Остаток (%)" GroupName="Op" Style="{StaticResource SelectRadio}"/>
+            </StackPanel>
+
+            <StackPanel x:Name="pnlList" Visibility="Collapsed">
+                <TextBlock Text="Операция:" Style="{StaticResource Label}"/>
+                <ListBox x:Name="lstOp" Style="{StaticResource SelectList}" HorizontalAlignment="Left">
+                    <ListBoxItem Content="Сложение (+)" IsSelected="True"/>
+                    <ListBoxItem Content="Вычитание (-)"/>
+                    <ListBoxItem Content="Умножение (*)"/>
+                    <ListBoxItem Content="Деление (/)"/>
+                    <ListBoxItem Content="Степень (^)"/>
+                    <ListBoxItem Content="Остаток (%)"/>
+                </ListBox>
+            </StackPanel>
+
+            <StackPanel x:Name="pnlBtns" Visibility="Collapsed">
+                <TextBlock Text="Операция:" Style="{StaticResource Label}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnAdd" Content="+" Style="{StaticResource OpBtn}" Click="OpBtn_Click" IsDefault="True"/>
+                    <Button x:Name="btnSub" Content="-" Style="{StaticResource OpBtn}" Click="OpBtn_Click"/>
+                    <Button x:Name="btnMul" Content="*" Style="{StaticResource OpBtn}" Click="OpBtn_Click"/>
+                    <Button x:Name="btnDiv" Content="/" Style="{StaticResource OpBtn}" Click="OpBtn_Click"/>
+                    <Button x:Name="btnPow" Content="^" Style="{StaticResource OpBtn}" Click="OpBtn_Click"/>
+                    <Button x:Name="btnMod" Content="%" Style="{StaticResource OpBtn}" Click="OpBtn_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Результат:" Style="{StaticResource Label}"/>
+            <TextBlock x:Name="txtResult" Style="{StaticResource ResultBox}" 
+                       Text="0" HorizontalAlignment="Left" MinWidth="200"/>
+            <Button Content="Вычислить" Click="BtnCalculate_Click" 
+                    Style="{StaticResource ActionBtn}"/>
+            <Button Content="Закрыть" Click="BtnClose_Click" 
+                    Style="{StaticResource ActionBtn}"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

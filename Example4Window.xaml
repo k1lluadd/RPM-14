@@ -1,0 +1,28 @@
+﻿<Window x:Class="RPM_14.Example4Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Пример 4: Иерархические стили" Height="160" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="DocButton">
+            <Setter Property="Background" Value="DarkBlue" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style BasedOn="{StaticResource DocButton}" TargetType="Button" x:Key="ActiveDocButton">
+            <Setter Property="Background" Value="DarkRed" />
+        </Style>
+    </Window.Resources>
+    <StackPanel Margin="10">
+        <TextBlock Text="Пример 4: ActiveDocButton наследует DocButton и меняет Background" 
+                   Margin="0,0,0,10" FontStyle="Italic"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Открыть" Style="{StaticResource ActiveDocButton}"/>
+            <Button Content="Обработать" Style="{StaticResource DocButton}"/>
+            <Button Content="Сохранить" Style="{StaticResource DocButton}"/>
+            <Button Content="Закрыть" Padding="5" Margin="5"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
